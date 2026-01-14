@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Мої Нотатки</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .note-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .btn-add {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn-edit { color: #007bff; text-decoration: none; font-weight: bold; }
+        .category-tag { color: #666; font-style: italic; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <h1>Мій записник</h1>
+
+    <a href="{% url 'note_create' %}" class="btn-add">➕ Додати нову нотатку</a>
+
+    <hr>
+
+    <div class="notes-container">
+        {% for note in notes %}
+            <div class="note-card">
+                <h3>{{ note.title }}</h3>
+                <p class="category-tag">Категорія: {{ note.category.title }}</p>
+
+                <p>{{ note.text|truncatechars:50 }}</p>
+
+                <small>Нагадування: {{ note.reminder|date:"d.m.Y H:i"|default:"Немає" }}</small>
+                <br><br>
+
+                <a href="{% url 'note_edit' note.pk %}" class="btn-edit">📝 Редагувати / Деталі</a>
+            </div>
+        {% empty %}
+            <p>Нотаток поки що немає. Створіть першу!</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
