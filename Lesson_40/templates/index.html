@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Нотатки</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h1>Мої нотатки</h1>
+
+<div class="notes">
+    {% for note in notes %}
+        <div class="note">
+            <h2>{{ note.title }}</h2>
+            <p>{{ note.text }}</p>
+            <small>Категорія: {{ note.category.title if note.category else "Без категорії" }}</small>
+            {% if note.reminder %}
+                <p class="reminder">⏰ Нагадування: {{ note.reminder.strftime('%d.%m.%Y %H:%M') }}</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>
