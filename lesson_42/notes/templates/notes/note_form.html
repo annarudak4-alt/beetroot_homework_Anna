@@ -1,0 +1,14 @@
+<h2>{{ title }}</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Зберегти</button>
+    <a href="{% url 'home' %}">Скасувати</a>
+</form>
+
+{% if note %}
+<hr>
+<form action="{% url 'note_delete' note.pk %}" method="GET">
+    <button type="submit" style="background-color: red; color: white;">Видалити нотатку</button>
+</form>
+{% endif %}
