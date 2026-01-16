@@ -1,0 +1,61 @@
+Ось відкоригований код для вашого файлу index.html. Я видалив зайву кнопку зверху (оскільки вона вже є у вашій синій шапці) та додав кнопку видалення в кожну картку поруч із кнопкою редагування.
+
+Оновлений index.html
+HTML
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="display-5">Мій записник</h1>
+    </div>
+
+<hr>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for note in notes %}
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-white border-0 pt-3">
+                    <span class="badge bg-secondary-subtle text-secondary border">
+                        📁 {{ note.category.title }}
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-dark">{{ note.title }}</h5>
+                    <p class="card-text text-muted">
+                        {{ note.text|truncatechars:80 }}
+                    </p>
+                </div>
+
+                <div class="card-footer bg-white border-0 pb-3">
+                    <div class="mb-2">
+                        <small class="text-muted">
+                            ⏰ Нагадування:
+                            <span class="{% if note.reminder %}text-primary fw-medium{% endif %}">
+                                {{ note.reminder|date:"d.m.Y H:i"|default:"Немає" }}
+                            </span>
+                        </small>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'note_edit' note.pk %}" class="btn btn-outline-primary btn-sm flex-grow-1">
+                            📝 Редагувати
+                        </a>
+                        <a href="{% url 'note_delete' note.pk %}" class="btn btn-outline-danger btn-sm">
+                            🗑️
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="alert alert-light border shadow-sm">
+                <p class="mb-0 fs-5 text-muted">Нотаток поки що немає. Створіть першу!</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
