@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow border-0 mt-4">
+            <div class="card-header bg-primary text-white py-3">
+                <h3 class="card-title mb-0 text-center">{{ title }}</h3>
+            </div>
+
+            <div class="card-body p-4">
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+
+                    {{ form|crispy }}
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            💾 Зберегти нотатку
+                        </button>
+                        <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                            Скасувати
+                        </a>
+                    </div>
+                </form>
+
+                {% if note %}
+                <hr class="my-4">
+                <div class="text-center">
+                    <p class="text-muted small mb-2">Небезпечна зона</p>
+                    <a href="{% url 'note_delete' note.pk %}" class="btn btn-sm btn-outline-danger">
+                        🗑️ Видалити цю нотатку назавжди
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

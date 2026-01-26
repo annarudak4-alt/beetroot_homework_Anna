@@ -1,0 +1,6 @@
+<h2>Ви впевнені, що хочете видалити "{{ note.title }}"?</h2>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Так, видалити</button>
+    <a href="{% url 'home' %}">Ні, повернутися</a>
+</form>
